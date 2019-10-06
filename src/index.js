@@ -7,7 +7,14 @@ function expressionCalculator(expr) {
     // write your solution here
     // parseing string
     let str =  expr;
-   //  console.log(str);
+    //console.log(str);
+    // check pair
+    let countBracket1;
+    let countBracket2;
+    if (str.indexOf("(") != -1) countBracket1 = str.match(/\(/g).length;
+    if (str.indexOf(")") != -1) countBracket2 = str.match(/\)/g).length;
+
+    if (countBracket1 !== countBracket2)  throw "ExpressionError: Brackets must be paired";
 
     function parseString (str) {
         str = str.replace(/^\s*/,'').replace(/\s*$/,'');
@@ -19,6 +26,7 @@ function expressionCalculator(expr) {
                 case "+":
                 case "-":
                     if (stack.length == 0) {
+                        OPZ += " ";
                         stack.push(str[i]);
                         break;
                     } 
@@ -33,6 +41,7 @@ function expressionCalculator(expr) {
                         OPZ += char;
                         stack.pop();
                     }
+                    OPZ += " ";
                     stack.push(str[i]);
                     break;
                 case "*":
@@ -42,6 +51,7 @@ function expressionCalculator(expr) {
                         OPZ += char;
                         stack.pop();
                     }
+                    OPZ += " ";
                     stack.push(str[i]);
                     break;
                 case "(":
@@ -53,6 +63,7 @@ function expressionCalculator(expr) {
                         OPZ += char;
                         stack.pop();
                     };
+                    OPZ += " ";
                     stack.pop();
                     break;
                 default: OPZ += str[i];
@@ -65,14 +76,15 @@ function expressionCalculator(expr) {
             stack.pop();
         }
 
-        // console.log(str);
-        // console.log(OPZ);
+        //console.log(str);
+        //console.log(OPZ);
         return OPZ;
     }
 
     function calculate(str) {
         str = str.replace(/\s+/g, " ");
-        // console.log(str);
+        //console.log(str);
+        if ((/ 0 \//).test(str)) throw "TypeError: Division by zero.";
         let stack = [];
         let arr = str.split(" ");
         arr.forEach(element => {
@@ -115,8 +127,8 @@ function expressionCalculator(expr) {
     
     }
 
-    return rezult = calculate(parseString(str));
-    //console.log(rezult.toFixed(4));
+    let rezult = calculate(parseString(str));
+    return rezult;
 
 }
 
